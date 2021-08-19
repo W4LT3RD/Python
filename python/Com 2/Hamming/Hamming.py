@@ -1,0 +1,6 @@
+print("\nHamming")
+tex=input("\n Ingrese el texto: ").upper().strip().replace(" ", "")
+print(tex)
+a_b = bytes(tex, "ascii")
+convertido=(''.join(["{0:b}".format(x)for x in a_b]))
+print(f"Texto convertido a ascii: {convertido}")
