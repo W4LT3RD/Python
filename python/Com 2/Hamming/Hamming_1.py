@@ -1,4 +1,4 @@
-#### Victor Ortiz ####
+""" Victor Ortiz """
 option=int(input('\n *"Hamming" \n\nOpciones a realizar: \n\n 1. Generar codigo Hamming.  \n 2. Hallar error en el codigo Hamming.\n\nIngrese el número de la opción: '))
 
 if(option==1):  # Para generar código Hamming 
