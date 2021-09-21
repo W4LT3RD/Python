@@ -10,7 +10,7 @@ P = D (K, C) = inv (K) * C (módulo X) - X es la longitud del alfabeto utilizado
 import numpy as np
 from egcd import egcd # pip install librerías
 
-alphabet = "abcdefghijklmnopqrstuvwxyz"
+alphabet = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ"
 
 letter_to_index = dict(zip(alphabet, range(len(alphabet)))) # Establece el rango de letras a números
 index_to_letter = dict(zip(range(len(alphabet)), alphabet)) # Establece el rando de número a letras
@@ -83,57 +83,46 @@ def decrypt(cipher, Kinv):
             decrypted += index_to_letter[number]
 
     return decrypted
-
-def main():
-    print("")
-    message2 = input("Ingrese el texto a cifrar: ")
-    message2 = message2.lower().strip().replace(" ", "")
-    print(message2)
-    message=message2
-
-   
-    print("")
-    print(f"Ahora ingrese los valores de la matriz llave")
-
-    a1 = int(input("Ingrese el valor [0,0]: "))
-    a2 = int(input("Ingrese el valor [0,1]: "))
-    b1 = int(input("Ingrese el valor [1,0]: "))
-    b2 = int(input("Ingrese el valor [1,1]: "))
-
-    K = np.matrix([[a1, a2], [b1, b2]])
-    Kinv = matrix_mod_inv(K, len(alphabet))
-
-    encrypted_message = encrypt(message, K)
-    decrypted_message = decrypt(encrypted_message, Kinv)
+print("")
+message2 = input("Ingrese el texto a cifrar: ")
+message2 = message2.upper().strip().replace(" ", "")
 
 
-    print("")
-    print("¿Qué desa hacer con el texto escrito?")
-    print("")
-    print("1) Ver mensaje original")
-    print("2) Ver mensaje encriptado")
-    print("3) Ver mensaje desencriptado")
-    print("4) Hacer todos los procesos")
-    print("")
+print(message2)
+message=message2
+
+K = np.matrix([[1,7], [9, 2]])
+Kinv = matrix_mod_inv(K, len(alphabet))
+
+encrypted_message = encrypt(message, K)
+decrypted_message = decrypt(encrypted_message, Kinv)
 
 
-    num = int(input("Introduzca el número del proceso que desea hacer: "))
-    print("_____________________________________________________")
-    print("")
-    if 0<num<5:
-        if(num==1):
-            print(f"Mensaje original: " + message)
-        if(num==2):
-            print(f"Mensaje encriptado: " + encrypted_message)
-        if(num==3):
-           print(f"Mensaje desencriptado: " + decrypted_message)
-        if(num==4): 
-            print(f"Mensaje original: " + message)
-            print("")
-            print(f"Mensaje encriptado: " + encrypted_message)
-            print("")
-            print(f"Mensaje desencriptado: " + decrypted_message)
-    else:
-        print(f"Número incorrecto")
-    print("_____________________________________________________")
-main()
+print("")
+print("¿Qué desa hacer con el texto escrito?")
+print("")
+print("1) Ver mensaje original")
+print("2) Ver mensaje encriptado")
+print("3) Ver mensaje desencriptado")
+print("4) Hacer todos los procesos")
+print("")
+
+num = int(input("Introduzca el número del proceso que desea hacer: "))
+print("_____________________________________________________")
+print("")
+if 0<num<5:
+    if(num==1):
+        print(f"Mensaje original: " + message)
+    if(num==2):
+        print(f"Mensaje encriptado: " + encrypted_message)
+    if(num==3):
+       print(f"Mensaje desencriptado: " + decrypted_message)
+    if(num==4): 
+        print(f"Mensaje original: " + message)
+        print("")
+        print(f"Mensaje encriptado: " + encrypted_message)
+        print("")
+        print(f"Mensaje desencriptado: " + decrypted_message)
+else:
+    print(f"Número incorrecto")
+print("_____________________________________________________")
