@@ -1,5 +1,14 @@
+"""
+Cifrado Hill
+Notación importante:
+K = Matriz llave
+P = Vector del texto (en números)
+C = Vector de texto cifrado (en números)
+C = E (K, P) = K * P (módulo X) - X es la longitud del alfabeto utilizado
+P = D (K, C) = inv (K) * C (módulo X) - X es la longitud del alfabeto utilizado
+"""
 import numpy as np
-from egcd import egcd # pip install librerías
+from egcd import egcd 
 
 alphabet = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ"
 
@@ -8,6 +17,11 @@ index_to_letter = dict(zip(range(len(alphabet)), alphabet)) # Establece el rando
 
 
 def matrix_mod_inv(matrix, modulus):
+    """Encontramos el módulo de matriz inversa por medio de los siguientes pasos:
+    Paso 1) Encuentra determinante
+    Paso 2) Encuentre el valor determinante en un módulo específico (generalmente la longitud del alfabeto)
+    Paso 3) Tome ese det_inv multiplicado por la matriz invertida det * (esta será la adjunta) en el módulo
+    """
 
     det = int(np.round(np.linalg.det(matrix)))  # Paso 1)
     det_inv = egcd(det, modulus)[1] % modulus  # Paso 2)
@@ -74,64 +88,20 @@ def decrypt(cipher, Kinv):
 print("")
 message2 = input("Ingrese el texto a cifrar: ")
 message2 = message2.upper().strip().replace(" ", "")
-print(f"Mensaje ingresado: {message2}")
-
 b=len(message2)
 c=b%2 
 if c==0:
     message=message2
-    
     K = np.matrix([[1,7], [9, 2]])
     Kinv = matrix_mod_inv(K, len(alphabet))
 
     encrypted_message = encrypt(message, K)
     decrypted_message = decrypt(encrypted_message, Kinv)
 
+    print(f"Mensaje original: " + message)
     print(f"Mensaje encriptado: " + encrypted_message)
+    print(f"Mensaje desencriptado: " + decrypted_message) 
 
-    tex=encrypted_message
-    a_b = bytes(tex, "ascii")
-    convertido=(''.join(["{0:b}".format(x)for x in a_b]))
-    print(f"Texto encriptado a binario: {convertido}")
-    d=convertido
-    data=list(d)
-    data.reverse()
-    c,ch,j,r,h=0,0,0,0,[]
-
-    while ((len(d)+r+1)>(pow(2,r))):
-        r=r+1
-
-    for i in range(0,(r+len(data))):
-        p=(2**c)
-
-        if(p==(i+1)):
-            h.append(0)
-            c=c+1
-
-        else:
-            h.append(int(data[j]))
-            j=j+1
-
-    for parity in range(0,(len(h))):
-        ph=(2**ch)
-        if(ph==(parity+1)):
-            startIndex=ph-1
-            i=startIndex
-            toXor=[]
-
-            while(i<len(h)):
-                block=h[i:i+ph]
-                toXor.extend(block)
-                i+=2*ph
-
-            for z in range(1,len(toXor)):
-                h[startIndex]=h[startIndex]^toXor[z]
-            ch+=1
-
-    h.reverse()
-    print('\nCódigo Hamming generado: ', end="")
-    print(int(''.join(map(str, h))))
-    print("\n")
 
     K = np.matrix([[1,7], [9, 2]])
     Kinv = matrix_mod_inv(K, len(alphabet))
@@ -149,48 +119,8 @@ elif c!=0:
     encrypted_message = encrypt(message, K)
     decrypted_message = decrypt(encrypted_message, Kinv)
 
-    print(f"Mensaje encriptado: " + encrypted_message)
-    tex=encrypted_message
-    print(f"Texto ingresado:  {tex}")
-    a_b = bytes(tex, "ascii")
-    convertido=(''.join(["{0:b}".format(x)for x in a_b]))
-    print(f"Texto encriptado en binario: {convertido}")
-    d=convertido
-    data=list(d)
-    data.reverse()
-    c,ch,j,r,h=0,0,0,0,[]
+    print(f"Mensaje original: " + message[:-1])
+    print(f"Mensaje encriptado: ", encrypted_message[:-1])
 
-    while ((len(d)+r+1)>(pow(2,r))):
-        r=r+1
+    print(f"Mensaje desencriptado: " + decrypted_message[:-1])
 
-    for i in range(0,(r+len(data))):
-        p=(2**c)
-
-        if(p==(i+1)):
-            h.append(0)
-            c=c+1
-
-        else:
-            h.append(int(data[j]))
-            j=j+1
-
-    for parity in range(0,(len(h))):
-        ph=(2**ch)
-        if(ph==(parity+1)):
-            startIndex=ph-1
-            i=startIndex
-            toXor=[]
-
-            while(i<len(h)):
-                block=h[i:i+ph]
-                toXor.extend(block)
-                i+=2*ph
-
-            for z in range(1,len(toXor)):
-                h[startIndex]=h[startIndex]^toXor[z]
-            ch+=1
-
-    h.reverse()
-    print('\nCódigo Hamming generado: ', end="")
-    print(int(''.join(map(str, h))))
-    print("\n")

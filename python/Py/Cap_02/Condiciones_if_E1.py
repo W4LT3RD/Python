@@ -3,6 +3,8 @@ Ejer1: programa debe de decir cuando existe un numero par.
 Ejer2: Programa que diga cuál es mayor de 3 números ingresados.
 Ejer3: Indicar cuales son vocales
 Ejer4: Operaciones aritméticas con dos números.
+Ejer5: Cajero automatico con opciones de crédito y débito de dinero, 
+    opciones del menú: acreditar, debitar, mostrar dinero, salir.
 """
 print("_______________________________________________________________")
 print("")
@@ -11,11 +13,12 @@ print("1. Ingresar dos números para indicar cuales son pares.")
 print("2. Ingresar tres números para indicar cuál es mayor.")
 print("3. Pedir un caracter e indicar si es vocal o no.")
 print("4. Una operación aritmética entre dos números.")
+print("5. Cajero automático.")
 print("________________________________________________________________")
 print("")
 np=int(input("Eliga el número de ejercicio que desee empezar: "))
 print("________________________________________________________________")
-if 4>=np>0:
+if 5>=np>0:
     print("")
     if np==1:
         print(" *¿Números pares o impares?")
@@ -82,6 +85,39 @@ if 4>=np>0:
             print(f"\nLa división de: {n14} / {n24} = {oper}")
         else:
             print(f"\nLa letra {loper} no es válida")
+    
+    if np==5:
+        din=1000
+        opcion=int(input("""
+        Bienvenido a tu cajero automático
+
+        Por favor elegir una opción:
+        1. Acreditar dinero.
+        2. Debitar dinero.
+        3. Mostrar dinero actual
+        4. Salir
+
+        Opcion a realizar: """))
+        print()
+        if opcion==1:
+            credit=float(input("Ingrese el saldo a acreditar: Q"))
+            din+=credit
+            print(f"Dinero total en su cuenta es: Q{din}")
+        elif opcion==2:
+            debit=float(input("Ingrese el saldo a debitar: Q"))
+            if debit>din:
+                print("No posee el dinero suficiente.")
+            else:
+                din-=debit
+                print(f"El dinero total en su cuenta es: Q{din}")
+        elif opcion==3:
+            print(f"Su saldo actual es: Q{din}")
+        elif opcion==4:
+            print("Gracias por usar nuestro servicio. Vuelva pronto.")
+        else:
+            print("Opción incorrecta.")
+
+
 
 
 else:
