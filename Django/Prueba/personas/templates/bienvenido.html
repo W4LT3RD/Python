@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UFT-8"> 
+    <title>
+        Bienvenido Usuario
+    </title>
+</head>
+<body>
+    <H1>Bienvenido</H1>
+    <div>
+        Número de personas: {{no_personas}}
+    </div>
+    <div><a href="nueva_persona">Agregar nueva persona</a></div>
+    <div>
+        <ul>
+            {% for persona in personas %}
+                <li>
+                    Persona {{persona.id}} : 
+                    {{persona.nombre}} 
+                    {{persona.apellido}}
+                    {{persona.email}}
+                    <a href="detalle_persona/{{persona.id}}">Ver detalle</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+
+</html>

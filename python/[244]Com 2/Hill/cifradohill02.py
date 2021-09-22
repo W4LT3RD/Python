@@ -1,11 +1,10 @@
 import numpy as np
-from egcd import egcd # pip install librerías
+from egcd import egcd 
 
 alphabet = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ"
 
 letter_to_index = dict(zip(alphabet, range(len(alphabet)))) # Establece el rango de letras a números
 index_to_letter = dict(zip(range(len(alphabet)), alphabet)) # Establece el rando de número a letras
-
 
 def matrix_mod_inv(matrix, modulus):
 
@@ -194,3 +193,4 @@ elif c!=0:
     print('\nCódigo Hamming generado: ', end="")
     print(int(''.join(map(str, h))))
     print("\n")
+    

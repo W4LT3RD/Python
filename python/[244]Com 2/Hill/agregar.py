@@ -8,3 +8,4 @@ elif c!=0:
     a+="ñ"
     print(a)
 print(a)
+print(a[:-1])
