@@ -5,19 +5,19 @@ from personas.forms import PersonaForm
 from personas.models import Persona
 from django.forms import modelform_factory
 
-
 # Create your views here.
 def bienvenida(rquest):
     return HttpResponse("Bienvenido Usuario :D")
+
 def despedida(request):
     return HttpResponse("Adiós usario :,c")
 
 def pag1(request):
-#    return render(request, "bienvenido.html", {'msj1':'Valor mensje 1', 'msj2':'Valor mensaje 2'}) 
+    # return render(request, "bienvenido.html", {'msj1':'Valor mensje 1', 'msj2':'Valor mensaje 2'}) 
     # o también se puede colocar como:
     
-#    mensajes = {'msj1':'Valor mensje 1', 'msj2':'Valor mensaje 2'}
-#    return render(request, "bienvenido.html",mensajes
+   # mensajes = {'msj1':'Valor mensje 1', 'msj2':'Valor mensaje 2'}
+   # return render(request, "bienvenido.html",mensajes
 
     no_personasvar = Persona.objects.count() # Cantidad de datos
     personas = Persona.objects.all() # Desplegar la información de la base de datos
@@ -37,11 +37,23 @@ def nuevaPersona(request):
         # Validación: 
         if formaPersona.is_valid(): # Validación de la información agregada en la pág
             formaPersona.save() # Con esto se hace un save en la base de datos 
-#       else:           # *este else se colocará al final
-#            return render(request, 'personas/nuevo.html', {'formaPersona':formaPersona})
+       # else:           # *este else se colocará al final
+           # return render(request, 'personas/nuevo.html', {'formaPersona':formaPersona})
             return redirect('inicio') # index = página principal
     else:
         formaPersona = PersonaForm()
         return render(request, 'personas/nuevo.html', {'formaPersona': formaPersona}) # indica los errores dentro del formulario 
     # si el formulario no es válido se redigirá al usuario a *nuevo.html
+    return render(request, 'personas/nuevo.html', {'formaPersona':formaPersona})
+
+def editarPersona(request):    
+    if request.method == 'POST':
+        formaPersona = PersonaForm(request.POST)
+        if formaPersona.is_valid():
+            formaPersona.save() 
+            return redirect('inicio') 
+    else:
+        formaPersona = PersonaForm()
+
+
     return render(request, 'personas/nuevo.html', {'formaPersona':formaPersona})
